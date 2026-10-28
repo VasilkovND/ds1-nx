@@ -122,8 +122,9 @@ STAMP="$CG/inputs.sha"
 INPUTS=$( (cat "$CG"/game/* "$CG/ds1_manifest.toml" "$REXGLUE" \
   "$ROOT"/ds1/tools/patch_branch_traps.py "$ROOT"/ds1/tools/patch_stack_access.py "$ROOT"/ds1/tools/patch_inline_calls.py "$ROOT"/ds1/tools/patch_local_regs.py
   echo "localregs=$LOCALREGS check=${PLR_CHECK:-0}"
-  # The generated functions the sources name (hooks, native callers) change what the passes do: those names.
-  NAMES=$(sed -n 's/^name = "\(.*\)"$/\1/p' "$CG/ds1_manifest.toml" | paste -sd'|' -)
+  # The generated functions the sources name (hooks, native callers) change what the passes do: those names (not the
+  # thousands of gap_/unresolved_target_ hints, which no source names and which make this grep take minutes).
+  NAMES=$(sed -n 's/^name = "\(.*\)"$/\1/p' "$CG/ds1_manifest.toml" | grep -vE '^(gap|unresolved_target)_' | paste -sd'|' -)
   cat $(find "$ROOT/ds1/src" "$ROOT/sdk/src" "$ROOT/sdk/include" -type f \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' \
     -o -name '*.cc' -o -name '*.inc' \) -not -path '*/codegen/*' | sort) | grep -oE "\b(sub_[0-9A-F]{8}|${NAMES:-sub_})\b" | sort -u) \
   | shasum -a 256 | cut -d' ' -f1)

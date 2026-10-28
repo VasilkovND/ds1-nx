@@ -11,7 +11,11 @@ is the space from one function's end to the next one's start; zero words (paddin
 taken as code when its first word is no padding and its last word before the next function ends a function (blr, bctr,
 or an unconditional b), and, with --pointers, only when the image holds a big-endian pointer to its start.
 
-Usage: find_code_gaps.py <generated/game> <image.bin of the module> <image base hex> [--pointers] > gaps.toml
+Zero words at a gap's end (alignment) are skipped too. With --split, a gap is cut after each word that ends a function
+and every piece is listed: Dead Space (2008) called a one-word `blr` stub (0x826B1368) that sat in one gap after
+another small function, both missed.
+
+Usage: find_code_gaps.py <generated/default> <image.bin> <image base hex> [--pointers] [--split] > gaps.toml
 """
 import re
 import struct
@@ -31,6 +35,7 @@ def ends_function(word):
 def main():
     gen, image_path, base = Path(sys.argv[1]), Path(sys.argv[2]), int(sys.argv[3], 16)
     want_pointers = '--pointers' in sys.argv
+    split = '--split' in sys.argv
     image = image_path.read_bytes()
     addr_of = {m.group(2): int(m.group(1), 16)
                for m in re.finditer(r'\{ 0x([0-9A-F]{8}), (\w+) \}', (gen / 'ds1_init.cpp').read_text())}
@@ -53,13 +58,26 @@ def main():
         g = max(extent[a], a)
         while g < b and word(g) == 0:
             g += 4
-        if g >= b or b - g < 8:
+        e = b
+        while e > g and word(e - 4) == 0:
+            e -= 4
+        if e - g < (4 if split else 8):
             continue
-        if not ends_function(word(b - 4)):
+        if not ends_function(word(e - 4)):
             continue
-        if pointers is not None and g not in pointers:
-            continue
-        found.append(g)
+        pieces = [g]
+        if split:
+            for x in range(g, e - 4, 4):
+                if ends_function(word(x)):
+                    n = x + 4
+                    while n < e and word(n) == 0:
+                        n += 4
+                    if n < e:
+                        pieces.append(n)
+        for p in pieces:
+            if pointers is not None and p not in pointers:
+                continue
+            found.append(p)
     for g in found:
         print(f'[entrypoint.functions.0x{g:08X}]\nname = "gap_{g:08X}"\n')
     print(f'# {len(found)} gaps of code between {len(starts)} functions', file=sys.stderr)
