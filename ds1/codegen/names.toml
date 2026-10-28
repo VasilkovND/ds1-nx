@@ -4474,3 +4474,9 @@ name = "unresolved_target_82850E1C"
 
 [entrypoint.functions.0x82848B24]
 name = "unresolved_target_82848B24"
+
+[entrypoint.functions.0x82862528]
+name = "gap_82862528"
+
+[entrypoint.functions.0x82862540]
+name = "gap_82862540"
