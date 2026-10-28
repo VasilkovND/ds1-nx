@@ -11,8 +11,11 @@ problem met.
 | Repository from ds3-nx: SDK `f961303` + patches 0001-0032 (0014, disc swap, dropped), build scripts, renderer glue | done |
 | Codegen from `default.xex` (host `rexglue` v0.10.0 + Hell's Gate's patch, as ds3-nx) | done: 184 units, 89 branch targets named (three rounds), 6 traps made gotos, 0 left |
 | Names from Dead Space 2 (`tools/match_funcs.py`) | 1,482 exact matches |
-| NRO links | done (`ds1.nro` ~50 MB) |
-| On the console | not run yet |
+| NRO links | done (`ds1.nro` ~51 MB) |
+| On the console | runs: menus and the first level (run 6-7), 720p tested; 540p not tested yet |
+| Shader library | 340 shaders, 2,829 DKSH (run 7: 95 % of the draws have both shaders) |
+| Rendering | wrong: the HUD and some objects draw, the level's walls and floors mostly do not (the space backdrop shows through), characters look translucent, many textures black |
+| Frame rate (720p, CPU 1785 MHz) | menus ~30 fps; in the level 20-27 fps, GPU 32-50 ms per frame at 1,000-2,700 draws |
 
 ## What is known about the game
 
@@ -48,3 +51,18 @@ wait hooks of ds3-nx are not compiled yet (their functions are not named).
 The 540p mode replaces 1280x720 with 960x540 at `0x82DBA0B4` after the display setup (`src/ds1_resolution.cpp`). The
 back buffer, created in the same function, stays 1280x720. Whether every render target follows the smaller size is
 not known until the first run.
+
+## Problems met
+
+| Run | Problem | Fix |
+| --- | --- | --- |
+| 1 | `Call to invalid or unregistered function 0x826B1368`, then nothing: a lone `blr` (a job's completion callback) the analysis never found, after another missed function at 0x826B1348 | `tools/find_code_gaps.py` names the code between known functions (932 gaps); it now skips alignment zeros at a gap's end |
+| 1 | `--split` (cutting gaps after each `b`/`blr`) cut real functions: 246 new branch targets | not used |
+| 2-4 | One frame, then the main thread at 100 % in 0x824ABA70: it hands a request on its stack to the job manager and spins (`lwsync; lwz r11,84(r1)`) until the job writes its status. `patch_stack_access.py` made stack accesses plain and the barrier generates no code, so the compiler read the status once | stack accesses stay volatile in functions with `sync`/`lwsync`/`eieio` |
+| 5 | `[FATAL] Jump target 0x824B8484 unresolved at bctr 0x824B8338`: gap and branch-target names inside 11 switch functions cut them, their jump tables no longer resolved | the 25 names inside those functions dropped |
+| 6 | Calls to 0x82862528 and 0x82862540 (missed) | named |
+| 6 | Two thirds of the draws skipped (no VS): the library had 91 of ~460 shaders. The console had dumped them; an incomplete FTP listing made it look otherwise | library rebuilt from 340 |
+| 7 | Walls and floors missing, translucent characters, black textures (see Status) | open |
+
+Diagnostics: `telemetria.flag` beside the NRO turns on the CPU stack profile from the start (`logs/rex/perfil_pilas.flag` does
+not work: the folder is cleared at start), `ds1.toml` with `ds1_atajos_depuracion = true` the ZL + ZR shortcuts.
