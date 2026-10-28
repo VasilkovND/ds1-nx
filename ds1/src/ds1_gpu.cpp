@@ -1561,8 +1561,11 @@ class RingGraphicsSystem final : public rex::system::IGraphicsSystem {
     // the walls failed, the sky showed through them and the characters looked translucent (run 7). Left alone, the
     // stencil kept the light volumes' marks and every light failed its stencil test: a black light buffer (run 8). So
     // such a clear writes the stencil alone (kCopiaSoloEstencil, sdk-patches/0033).
-    const bool stencil_only = !depth_only && !(depth_control & 0x4) && (depth_control & 0x1);
-    const bool z_written = depth_only || (depth_control & 0x4) || ((depth_control & 0x1) && !stencil_only);
+    // In depth-only mode too (run 9: the clear between the lights and the material pass is mode 5, 00008701; taken as
+    // a depth clear, the material pass drew with no occlusion and walls, characters and the sky showed through each
+    // other).
+    const bool stencil_only = !(depth_control & 0x4) && (depth_control & 0x1);
+    const bool z_written = !stencil_only && (depth_only || (depth_control & 0x4));
     if (stencil_only) {
       rex::x360::RegistrosCopia c = base;
       c.rb_copy_control = 4u | (1u << 9) | kNullCommand | rex::x360::kCopiaSoloEstencil;
