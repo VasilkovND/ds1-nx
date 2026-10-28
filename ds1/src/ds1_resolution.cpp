@@ -8,6 +8,7 @@
 
 #include <rex/logging.h>
 #include <rex/memory.h>
+#include <rex/x360/xenos.h>
 
 #include "ds1_resolution.h"
 
@@ -23,6 +24,9 @@ REX_EXTERN(ds1_ConfigureDisplay) {
     rex::memory::store_and_swap<uint16_t>(REX_RAW_ADDR(r::kAnchoEscena), 960);
     rex::memory::store_and_swap<uint16_t>(REX_RAW_ADDR(r::kAltoEscena), 540);
   }
+  // The renderer's GPU report sorts passes by width (rex::x360::CategoriaDeDestino): the scene is the game's width
+  // (by default 1280; at 960 every pass of the 540p scene was reported as "reflejo").
+  rex::x360::g_ancho_escena.store(rex::memory::load_and_swap<uint16_t>(REX_RAW_ADDR(r::kAnchoEscena)));
   REXLOG_INFO("ds1: escena {}x{} (el juego puso {}x{}; elegida {}p, {}; CPU {} MHz)",
               rex::memory::load_and_swap<uint16_t>(REX_RAW_ADDR(r::kAnchoEscena)),
               rex::memory::load_and_swap<uint16_t>(REX_RAW_ADDR(r::kAltoEscena)), ancho, alto, elegida,
