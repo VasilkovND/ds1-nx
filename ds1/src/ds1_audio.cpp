@@ -1,8 +1,10 @@
 // ds1-nx - lighter audio for the Switch's CPU.
 //
-// Dead Space 3 mixes with the same RenderWare Audio (rwaudiocore) as Dead Space 2, where the mixer thread was the
-// heaviest after the game's own. ds1/codegen/names.toml names the functions hooked here (MixWithGain and CopyWithGain
-// are byte for byte Dead Space 2's); CMake compiles this file only when their names are there.
+// From ds3-nx. Dead Space (2008) mixes with RenderWare Audio too, on one thread ("RWAudioCore Dac", 50-60 % of a core
+// at stock clocks in run 7). Each hook below is compiled only when ds1/codegen/names.toml names its function
+// (DS1_HOOK_<name>). MixWithGain (0x826512C8) and CopyWithGain (0x82647698) are not Dead Space 2's byte for byte but
+// do the same thing with the same arguments (dst r3, src r4, gain f1, count r6; vmaddfp / vmulfp, scalar tail with
+// fmadds / fmuls). The XAudio threads are not named yet.
 //
 // The final compressor (Dead Space 2: rw::audio::core::Compressor1::Process, a third of its mixer thread) has its own
 // bypass: with its threshold at 0 dB or its ratio at 1 it leaves the mixer's buffer as it is (it works in place),
@@ -47,7 +49,7 @@ extern "C" bool RexSwitchSetCurrentThreadPriorityOk(int priority);
 #endif
 
 namespace {
-void ElevarHiloAudio(const char* que) {
+[[maybe_unused]] void ElevarHiloAudio(const char* que) {
   thread_local bool hecho = false;
   if (hecho) return;
   hecho = true;
@@ -67,6 +69,7 @@ REXCVAR_DEFINE_BOOL(ds1_audio_sin_compresor, true, "DS1",
                     "Saltarse el compresor final del audio del juego (su propio camino de bypass): parte del hilo de "
                     "mezcla. false = el sonido original, mas CPU");
 
+#if defined(DS1_HOOK_ds1_rw_audio_Compressor1_Process)
 REX_EXTERN(__imp__ds1_rw_audio_Compressor1_Process);
 REX_EXTERN(ds1_rw_audio_Compressor1_Process) {
   if (REXCVAR_GET(ds1_audio_sin_compresor)) {
@@ -80,6 +83,7 @@ REX_EXTERN(ds1_rw_audio_Compressor1_Process) {
   }
   __imp__ds1_rw_audio_Compressor1_Process(ctx, base);
 }
+#endif
 
 REXCVAR_DEFINE_BOOL(ds1_audio_nativo, true, "DS1",
                     "MixWithGain y CopyWithGain del mezclador en NEON nativo en vez de traducidos");
@@ -108,7 +112,7 @@ inline void GuardarFloatBe(uint8_t* p, float f) {
 }
 
 // dst[i] = dst[i] + src[i] * gain (mezclar) or src[i] * gain.
-void ConGanancia(uint8_t* dst, const uint8_t* src, float gain, uint32_t n, bool mezclar) {
+[[maybe_unused]] void ConGanancia(uint8_t* dst, const uint8_t* src, float gain, uint32_t n, bool mezclar) {
   uint32_t i = 0;
 #if defined(__aarch64__)
   const float32x4_t g = vdupq_n_f32(gain);
@@ -133,6 +137,7 @@ void ConGanancia(uint8_t* dst, const uint8_t* src, float gain, uint32_t n, bool 
 }  // namespace
 
 // void MixWithGain(float* dst, float* src, float gain, unsigned count)
+#if defined(DS1_HOOK_rw__audio__core__MixWithGain)
 REX_EXTERN(__imp__rw__audio__core__MixWithGain);
 REX_EXTERN(rw__audio__core__MixWithGain) {
   ElevarHiloAudio("hilo de mezcla");
@@ -142,8 +147,10 @@ REX_EXTERN(rw__audio__core__MixWithGain) {
     __imp__rw__audio__core__MixWithGain(ctx, base);
   }
 }
+#endif
 
 // void CopyWithGain(float* dst, float* src, float gain, unsigned count)
+#if defined(DS1_HOOK_rw__audio__core__CopyWithGain)
 REX_EXTERN(__imp__rw__audio__core__CopyWithGain);
 REX_EXTERN(rw__audio__core__CopyWithGain) {
   ElevarHiloAudio("hilo de mezcla");
@@ -153,34 +160,42 @@ REX_EXTERN(rw__audio__core__CopyWithGain) {
   }
   __imp__rw__audio__core__CopyWithGain(ctx, base);
 }
+#endif
 
 // The audio threads' loops: raise the thread, then run the game's own.
+#if defined(DS1_HOOK_ds1_rw_audio_MixerThreadLoop)
 REX_EXTERN(__imp__ds1_rw_audio_MixerThreadLoop);
 REX_EXTERN(ds1_rw_audio_MixerThreadLoop) {
   ElevarHiloAudio("hilo de mezcla de RenderWare Audio");
   __imp__ds1_rw_audio_MixerThreadLoop(ctx, base);
 }
+#endif
 
+#if defined(DS1_HOOK_ds1_xaudio_ThreadA)
 REX_EXTERN(__imp__ds1_xaudio_ThreadA);
 REX_EXTERN(ds1_xaudio_ThreadA) {
   ElevarHiloAudio("hilo de XAudio (A)");
   __imp__ds1_xaudio_ThreadA(ctx, base);
 }
+#endif
 
+#if defined(DS1_HOOK_ds1_xaudio_ThreadB)
 REX_EXTERN(__imp__ds1_xaudio_ThreadB);
 REX_EXTERN(ds1_xaudio_ThreadB) {
   ElevarHiloAudio("hilo de XAudio (B)");
   __imp__ds1_xaudio_ThreadB(ctx, base);
 }
+#endif
 
 // StreamPool::AcquireStream(pool, ...) returns a free stream of the pool, or 0 when it has none (its three callers take
 // that path: the sound does not start). In Dead Space 2, SndPlayer1::PlayHandler passed 0 when no pool matched a
 // sound's codec, AcquireStream read the pool's flags (+0x31 there, +0x3C here) and the game crashed after sleep and on
 // some loads (ds2-nx 1.2.2). Same RenderWare Audio here: a null pool gets "no stream", logged.
 namespace {
-std::atomic<uint32_t> g_pools_nulos{0};
+[[maybe_unused]] std::atomic<uint32_t> g_pools_nulos{0};
 }  // namespace
 
+#if defined(DS1_HOOK_rw__audio__core__StreamPool__AcquireStream)
 REX_EXTERN(__imp__rw__audio__core__StreamPool__AcquireStream);
 REX_EXTERN(rw__audio__core__StreamPool__AcquireStream) {
   if (ctx.r3.u32 == 0) {
@@ -195,3 +210,4 @@ REX_EXTERN(rw__audio__core__StreamPool__AcquireStream) {
   }
   __imp__rw__audio__core__StreamPool__AcquireStream(ctx, base);
 }
+#endif

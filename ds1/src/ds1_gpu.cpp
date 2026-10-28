@@ -1548,7 +1548,14 @@ class RingGraphicsSystem final : public rex::system::IGraphicsSystem {
       clear_depth_at(b, what);
     }
     const uint32_t z_base = depth_info & 0xFFF;
-    const bool z_written = depth_only || (depth_control & 0x4) || (depth_control & 0x1);
+    // Stencil on without depth writes (00008701) writes only the stencil: Dead Space (2008) clears its material target
+    // that way right after the G-buffer and light passes, and the material pass then tests the G-buffer's depth
+    // (LEQUAL, no write). Taken as a depth clear (the renderer clears depth and stencil together), the depth was gone:
+    // the walls failed, the sky showed through them and the characters looked translucent (run 7). Such a clear leaves
+    // depth and stencil alone here (the stencil is not cleared: the renderer has no stencil-only clear).
+    const bool stencil_only = !depth_only && !(depth_control & 0x4) && (depth_control & 0x1);
+    const bool z_written = depth_only || (depth_control & 0x4) || ((depth_control & 0x1) && !stencil_only);
+    if (stencil_only) what += fmt::format(" z={:03X} kept (stencil only)", depth_info & 0xFFF);
     if (z_written && !(c0_written && z_base == c0_base) &&
         std::find(aliased_depth, aliased_depth + n_aliased, z_base) == aliased_depth + n_aliased) {
       clear_depth_at(z_base, what);

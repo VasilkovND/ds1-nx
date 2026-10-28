@@ -4480,3 +4480,35 @@ name = "gap_82862528"
 
 [entrypoint.functions.0x82862540]
 name = "gap_82862540"
+
+# Direct3D's "is the GPU there yet" step (src/ds1_game_cpu.cpp): 4 x 8 db16cyc, then a look at the GPU's progress;
+# returns 1 while still waiting. The only function with eight db16cyc, the same body as Dead Space 3's 0x88A20950.
+[entrypoint.functions.0x823E2D28]
+name = "ds1_D3D_GpuWaitStep"
+
+# A RenderWare Audio function only the mixer thread ("RWAudioCore Dac") runs, once per mix (run 7's stack samples):
+# the hook raises that thread's priority once (src/ds1_audio.cpp).
+[entrypoint.functions.0x82650EE0]
+name = "ds1_rw_audio_MixerThreadLoop"
+
+# StreamPool::AcquireStream (tools/fuzzy_find.py 0.922 against Dead Space 2's): a null pool gets "no stream".
+[entrypoint.functions.0x826547B8]
+name = "rw__audio__core__StreamPool__AcquireStream"
+
+# RenderWare Audio's mixer leaf loops (src/ds1_audio.cpp: NEON versions). Not byte for byte Dead Space 2's, the same
+# arguments and arithmetic (read in the generated code): dst r3, src r4, gain f1, count r6.
+[entrypoint.functions.0x826512C8]
+name = "rw__audio__core__MixWithGain"
+
+[entrypoint.functions.0x82647698]
+name = "rw__audio__core__CopyWithGain"
+
+# RenderWare Audio's final compressor, Compressor1::Process (fuzzy_find.py 0.922; its bypass, as Dead Space 2's,
+# clears its state and returns 1 with the buffer untouched).
+[entrypoint.functions.0x82658600]
+name = "ds1_rw_audio_Compressor1_Process"
+
+# XDK D3DDevice_SetGammaRamp (fuzzy 0.931, and the sibling 0x823E7C50 is SetPWLGamma): it calls GammaRampCorrected
+# (0x823FAD78, fuzzy 0.853) with the device + 15004.
+[entrypoint.functions.0x823E7B70]
+name = "ds1_D3DDevice_SetGammaRamp"

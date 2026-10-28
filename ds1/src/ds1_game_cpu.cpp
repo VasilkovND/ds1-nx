@@ -1,13 +1,13 @@
 // ds1-nx - CPU hooks on the game's own functions (built into the game module: cmake/ds1_switch.cmake says why).
 //
-// SetThreadPriority (the XDK's Win32 one, 0x88BA72D0; Dead Space 2's EA::Thread::SetThreadPriority wrapper is inlined in
+// SetThreadPriority (the XDK's Win32 one, 0x82892C10; Dead Space 2's EA::Thread::SetThreadPriority wrapper is inlined in
 // Dead Space 3, which calls this directly): EA's job workers raise their priority to 127 before each job and drop it to
 // -128 after it. In the SDK kernel each call is a handle lookup, a priority change and a release, every one under the
 // object table's lock (the one every WaitForSingleObject and ReleaseSemaphore also takes), and with
 // ignore_thread_priorities the host thread's priority does not change anyway. Then it only reports success. (Run 6
 // stack samples: 8-10 % of each job worker's samples were in it.)
 //
-// Direct3D's GPU wait step (0x88A20950): BlockOnFence and the other Direct3D waits call it in a loop until the GPU (here
+// Direct3D's GPU wait step (0x823E2D28): BlockOnFence and the other Direct3D waits call it in a loop until the GPU (here
 // the ring thread) has passed a fence. On the Xbox 360 its db16cyc delays cost one hardware thread of six; here they
 // compile to nothing and the loop takes a whole core from the threads it waits for (the ring thread, the audio mixers,
 // the job workers). Run 7's stack samples: 6 % of the main thread in calm play, 40-60 % while the ring thread was slow.
@@ -26,6 +26,7 @@
 
 REXCVAR_DECLARE(bool, ignore_thread_priorities);
 
+#if defined(DS1_HOOK_ds1_SetThreadPriority)
 REX_EXTERN(__imp__ds1_SetThreadPriority);
 REX_EXTERN(ds1_SetThreadPriority) {
   if (REXCVAR_GET(ignore_thread_priorities)) {
@@ -34,15 +35,17 @@ REX_EXTERN(ds1_SetThreadPriority) {
   }
   __imp__ds1_SetThreadPriority(ctx, base);
 }
+#endif
 
 REXCVAR_DEFINE_INT32(ds1_espera_gpu_us, 100, "DS1",
-                     "Microsegundos que duerme la espera activa de Direct3D a la GPU (0x88A20950) tras las cesiones; "
+                     "Microsegundos que duerme la espera activa de Direct3D a la GPU (0x823E2D28) tras las cesiones; "
                      "0 = girar como en la Xbox 360")
     .range(0, 2000);
 REXCVAR_DEFINE_INT32(ds1_espera_gpu_cesiones, 32, "DS1",
                      "Veces que la espera de Direct3D a la GPU solo cede el nucleo antes de dormir")
     .range(0, 100000);
 
+#if defined(DS1_HOOK_ds1_D3D_GpuWaitStep)
 REX_EXTERN(__imp__ds1_D3D_GpuWaitStep);
 REX_EXTERN(ds1_D3D_GpuWaitStep) {
   thread_local uint32_t seguidas = 0;  // "still waiting" answers in a row on this thread
@@ -59,14 +62,18 @@ REX_EXTERN(ds1_D3D_GpuWaitStep) {
     rex::thread::Sleep(std::chrono::microseconds(us));
   }
 }
+#endif
 
 // D3DDevice_SetGammaRamp(device, flags, ramp): Direct3D corrects the game's ramp (GammaRampCorrected) and keeps it in
-// the device at +15408 (1536 bytes) for the display output; Displ_SetGamma calls it with the in-game brightness. The
-// Switch's output never saw it, so the brightness setting did nothing. After the original, the device's copy goes to
+// the device at +15004 in this XDK (Dead Space 3: +15408; 1536 bytes) for the display output; the game calls it with
+// the in-game brightness. The Switch's output never saw it, so the brightness setting did nothing. After the original,
+// the device's copy goes to
 // the renderer (ds1_gpu.cpp, applied at the next present; nfsmw_nativo_rampa_gamma = false turns it off there).
+#if defined(DS1_HOOK_ds1_D3DDevice_SetGammaRamp)
 REX_EXTERN(__imp__ds1_D3DDevice_SetGammaRamp);
 REX_EXTERN(ds1_D3DDevice_SetGammaRamp) {
   const uint32_t dispositivo = ctx.r3.u32;
   __imp__ds1_D3DDevice_SetGammaRamp(ctx, base);
-  ds1::gpu::PonerRampaGamma(REX_RAW_ADDR(dispositivo + 15408));
+  ds1::gpu::PonerRampaGamma(REX_RAW_ADDR(dispositivo + 15004));
 }
+#endif
