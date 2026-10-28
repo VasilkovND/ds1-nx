@@ -1543,6 +1543,13 @@ class RingGraphicsSystem final : public rex::system::IGraphicsSystem {
       // color clear wiped the scene's depth and stencil right before the light volumes and the material pass (lights
       // failing their stencil, unlit menu machines, characters and rocks drawn over each other: "see-through").
       if (ps_ && !((ps_->salidas >> i) & 0x1)) continue;
+      // Nor the live depth buffer when the clear does not write depth: Dead Space (2008)'s material target clear
+      // (depthcontrol 00008701, c1-c3 on base 000 where the G-buffer's depth is) wiped it this way, and the material
+      // pass (LEQUAL, no write) then failed and the sky showed through walls and characters (runs 7-8).
+      if (b == (depth_info & 0xFFF) && !(depth_control & 0x4)) {
+        what += fmt::format(" c{}={:03X} kept (live depth)", i, b);
+        continue;
+      }
       if (std::find(aliased_depth, aliased_depth + n_aliased, b) != aliased_depth + n_aliased) continue;
       aliased_depth[n_aliased++] = b;
       clear_depth_at(b, what);
