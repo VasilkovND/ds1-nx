@@ -14,7 +14,7 @@ problem met.
 | NRO links | done (`ds1.nro` ~51 MB) |
 | On the console | runs: menus and the first level (run 6-7), 720p tested; 540p not tested yet |
 | Shader library | 340 shaders, 2,829 DKSH (run 7: 95 % of the draws have both shaders) |
-| Rendering | wrong: the HUD and some objects draw, the level's walls and floors mostly do not (the space backdrop shows through), characters look translucent, many textures black |
+| Rendering | right in the first level (run 10), after three clear fixes (Problems met, runs 7-9) |
 | Frame rate (720p, CPU 1785 MHz) | menus ~30 fps; in the level 20-27 fps, GPU 32-50 ms per frame at 1,000-2,700 draws |
 
 ## What is known about the game
@@ -62,7 +62,10 @@ not known until the first run.
 | 5 | `[FATAL] Jump target 0x824B8484 unresolved at bctr 0x824B8338`: gap and branch-target names inside 11 switch functions cut them, their jump tables no longer resolved | the 25 names inside those functions dropped |
 | 6 | Calls to 0x82862528 and 0x82862540 (missed) | named |
 | 6 | Two thirds of the draws skipped (no VS): the library had 91 of ~460 shaders. The console had dumped them; an incomplete FTP listing made it look otherwise | library rebuilt from 340 |
-| 7 | Walls and floors missing, translucent characters, black textures (see Status) | open |
+| 7 | Walls and floors see-through, translucent characters: the clear of the material target (00008701: stencil on, no depth write) was taken as a depth clear and wiped the G-buffer's depth | stencil-only clears leave the depth |
+| 8 | Black light buffer: that clear no longer cleared the stencil, and the light volumes' stencil test failed | `sdk-patches/0033`: a stencil-only clear |
+| 9 | Walls, Isaac and the space backdrop through each other: a second such clear, in depth-only mode (mode 5), still wiped the depth | stencil-only in any mode |
+| 10 | Picture right; 17-29 fps at 540p stock, GPU 30-57 ms per frame at 1,500-4,600 draws; RWAudioCore mixer 66 % of a core (a per-sample IIR filter, 0x82644C38), XMA decoder 31 % | measured with telemetry on (1 ms stack sampling): to measure again without it |
 
 Diagnostics: `telemetria.flag` beside the NRO turns on the CPU stack profile from the start (`logs/rex/perfil_pilas.flag` does
 not work: the folder is cleared at start), `ds1.toml` with `ds1_atajos_depuracion = true` the ZL + ZR shortcuts.
