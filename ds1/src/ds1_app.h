@@ -82,6 +82,12 @@ class Ds1App : public rex::ReXApp {
     // stronger, so half by default (sdk-patches/0032; the options menu changes it and keeps the choice in
     // ds1_vibracion.txt).
     DefaultFlag("input_vibracion_fuerza", "0.5");
+    // The ring thread's per-draw cost (run 10: ~9 us a draw at 1,500-4,600 draws a frame, half of it the vertex ranges'
+    // fingerprints). The geometry store was full (60 of 64 MB, 1,722 evictions in 10 s, each re-uploaded and hashed
+    // again): 128 MB. A range found equal 16 checks in a row is checked every 2nd frame (of ~8,000 ranges a frame ~60
+    // change); 1 checks every one, as Dead Space 3 needs for its CPU-animated meshes.
+    DefaultFlag("nfsmw_dk_geometria_mb", "128");
+    DefaultFlag("nfsmw_dk_geometria_confianza", "2");
 #if defined(__SWITCH__)
     REXCVAR_SET(switch_atajos_depuracion, REXCVAR_GET(ds1_atajos_depuracion));
 #endif
