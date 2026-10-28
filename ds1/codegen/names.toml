@@ -1090,9 +1090,6 @@ name = "gap_822D1ED8"
 [entrypoint.functions.0x822D26E8]
 name = "gap_822D26E8"
 
-[entrypoint.functions.0x822D2B0C]
-name = "gap_822D2B0C"
-
 [entrypoint.functions.0x822D2C68]
 name = "gap_822D2C68"
 
@@ -1819,9 +1816,6 @@ name = "gap_824B5878"
 [entrypoint.functions.0x824B7D30]
 name = "gap_824B7D30"
 
-[entrypoint.functions.0x824B8588]
-name = "gap_824B8588"
-
 [entrypoint.functions.0x824BEE40]
 name = "gap_824BEE40"
 
@@ -2040,12 +2034,6 @@ name = "gap_825A6524"
 
 [entrypoint.functions.0x825A6DD0]
 name = "gap_825A6DD0"
-
-[entrypoint.functions.0x825A7CCC]
-name = "gap_825A7CCC"
-
-[entrypoint.functions.0x825A8274]
-name = "gap_825A8274"
 
 [entrypoint.functions.0x825B4320]
 name = "gap_825B4320"
@@ -2713,23 +2701,14 @@ name = "gap_82848A54"
 [entrypoint.functions.0x82848FA4]
 name = "gap_82848FA4"
 
-[entrypoint.functions.0x8284B0AC]
-name = "gap_8284B0AC"
-
 [entrypoint.functions.0x8284D238]
 name = "gap_8284D238"
-
-[entrypoint.functions.0x8284ED94]
-name = "gap_8284ED94"
 
 [entrypoint.functions.0x828512A0]
 name = "gap_828512A0"
 
 [entrypoint.functions.0x82851370]
 name = "gap_82851370"
-
-[entrypoint.functions.0x8285315C]
-name = "gap_8285315C"
 
 [entrypoint.functions.0x828552B4]
 name = "gap_828552B4"
@@ -3551,9 +3530,6 @@ name = "unresolved_target_822D1F38"
 [entrypoint.functions.0x822D273C]
 name = "unresolved_target_822D273C"
 
-[entrypoint.functions.0x822D2BA4]
-name = "unresolved_target_822D2BA4"
-
 [entrypoint.functions.0x822D32F4]
 name = "unresolved_target_822D32F4"
 
@@ -4040,9 +4016,6 @@ name = "unresolved_target_824B4FFC"
 [entrypoint.functions.0x824B5010]
 name = "unresolved_target_824B5010"
 
-[entrypoint.functions.0x824B8514]
-name = "unresolved_target_824B8514"
-
 [entrypoint.functions.0x824E6808]
 name = "unresolved_target_824E6808"
 
@@ -4244,9 +4217,6 @@ name = "unresolved_target_828489AC"
 [entrypoint.functions.0x82848DB0]
 name = "unresolved_target_82848DB0"
 
-[entrypoint.functions.0x8284975C]
-name = "unresolved_target_8284975C"
-
 [entrypoint.functions.0x8284B358]
 name = "unresolved_target_8284B358"
 
@@ -4256,9 +4226,6 @@ name = "unresolved_target_8284CDE4"
 [entrypoint.functions.0x8284D070]
 name = "unresolved_target_8284D070"
 
-[entrypoint.functions.0x8284D424]
-name = "unresolved_target_8284D424"
-
 [entrypoint.functions.0x82851070]
 name = "unresolved_target_82851070"
 
@@ -4267,9 +4234,6 @@ name = "unresolved_target_828510A8"
 
 [entrypoint.functions.0x828512C4]
 name = "unresolved_target_828512C4"
-
-[entrypoint.functions.0x8285180C]
-name = "unresolved_target_8285180C"
 
 [entrypoint.functions.0x828533D8]
 name = "unresolved_target_828533D8"
@@ -4421,9 +4385,6 @@ name = "unresolved_target_82397B88"
 [entrypoint.functions.0x823CA144]
 name = "unresolved_target_823CA144"
 
-[entrypoint.functions.0x824B8230]
-name = "unresolved_target_824B8230"
-
 [entrypoint.functions.0x82533884]
 name = "unresolved_target_82533884"
 
@@ -4508,44 +4469,8 @@ name = "unresolved_target_825FE720"
 [entrypoint.functions.0x82848D74]
 name = "unresolved_target_82848D74"
 
-[entrypoint.functions.0x82849708]
-name = "unresolved_target_82849708"
-
-[entrypoint.functions.0x8284D3D0]
-name = "unresolved_target_8284D3D0"
-
 [entrypoint.functions.0x82850E1C]
 name = "unresolved_target_82850E1C"
-
-[entrypoint.functions.0x828517B8]
-name = "unresolved_target_828517B8"
-
-[entrypoint.functions.0x824B80C4]
-name = "unresolved_target_824B80C4"
-
-[entrypoint.functions.0x824B80D0]
-name = "unresolved_target_824B80D0"
-
-[entrypoint.functions.0x824B82A0]
-name = "unresolved_target_824B82A0"
-
-[entrypoint.functions.0x824B82E0]
-name = "unresolved_target_824B82E0"
-
-[entrypoint.functions.0x824B8490]
-name = "unresolved_target_824B8490"
-
-[entrypoint.functions.0x824B8498]
-name = "unresolved_target_824B8498"
-
-[entrypoint.functions.0x824B84E4]
-name = "unresolved_target_824B84E4"
-
-[entrypoint.functions.0x824B850C]
-name = "unresolved_target_824B850C"
-
-[entrypoint.functions.0x824B8520]
-name = "unresolved_target_824B8520"
 
 [entrypoint.functions.0x82848B24]
 name = "unresolved_target_82848B24"

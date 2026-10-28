@@ -112,6 +112,15 @@ const rex::x360::EntradaShader* Entrada(uint8_t* base, uint32_t address) {
 // After the call r3 is the new object.
 void Registrar(PPCContext& ctx, uint32_t container, const rex::x360::EntradaShader* entrada) {
   auto& biblioteca = ds1::shaders::Global();
+  // Run 5: 270 of 400 objects had no library entry and none was dumped. The first ones, to see why.
+  static std::atomic<int> sin_entrada{0};
+  if (!entrada && container && biblioteca.cargada() && sin_entrada.fetch_add(1) < 12) {
+    uint8_t* base = rex::system::kernel_memory()->virtual_membase();
+    REXLOG_WARN("[shaders] object {:08X} without entry: container {:08X} words {:08X} {:08X} {:08X} {:08X} {:08X} {:08X}",
+                ctx.r3.u32, container, REX_LOAD_U32(container), REX_LOAD_U32(container + 4),
+                REX_LOAD_U32(container + 8), REX_LOAD_U32(container + 12), REX_LOAD_U32(container + 16),
+                REX_LOAD_U32(container + 20));
+  }
   if (container && biblioteca.cargada()) {
     biblioteca.RegistrarObjeto(rex::system::kernel_memory(), ctx.r3.u32, entrada);
   }
