@@ -1558,11 +1558,18 @@ class RingGraphicsSystem final : public rex::system::IGraphicsSystem {
     // Stencil on without depth writes (00008701) writes only the stencil: Dead Space (2008) clears its material target
     // that way right after the G-buffer and light passes, and the material pass then tests the G-buffer's depth
     // (LEQUAL, no write). Taken as a depth clear (the renderer clears depth and stencil together), the depth was gone:
-    // the walls failed, the sky showed through them and the characters looked translucent (run 7). Such a clear leaves
-    // depth and stencil alone here (the stencil is not cleared: the renderer has no stencil-only clear).
+    // the walls failed, the sky showed through them and the characters looked translucent (run 7). Left alone, the
+    // stencil kept the light volumes' marks and every light failed its stencil test: a black light buffer (run 8). So
+    // such a clear writes the stencil alone (kCopiaSoloEstencil, sdk-patches/0033).
     const bool stencil_only = !depth_only && !(depth_control & 0x4) && (depth_control & 0x1);
     const bool z_written = depth_only || (depth_control & 0x4) || ((depth_control & 0x1) && !stencil_only);
-    if (stencil_only) what += fmt::format(" z={:03X} kept (stencil only)", depth_info & 0xFFF);
+    if (stencil_only) {
+      rex::x360::RegistrosCopia c = base;
+      c.rb_copy_control = 4u | (1u << 9) | kNullCommand | rex::x360::kCopiaSoloEstencil;
+      c.rb_depth_clear = depth_value;
+      destinos_->Copiar(c);
+      what += fmt::format(" z={:03X} stencil only ->{:02X}", depth_info & 0xFFF, depth_value & 0xFF);
+    }
     if (z_written && !(c0_written && z_base == c0_base) &&
         std::find(aliased_depth, aliased_depth + n_aliased, z_base) == aliased_depth + n_aliased) {
       clear_depth_at(z_base, what);
