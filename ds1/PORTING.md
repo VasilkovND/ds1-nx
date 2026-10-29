@@ -12,7 +12,7 @@ problem met.
 | Codegen from `default.xex` (host `rexglue` v0.10.0 + Hell's Gate's patch, as ds3-nx) | done: 184 units, 89 branch targets named (three rounds), 6 traps made gotos, 0 left |
 | Names from Dead Space 2 (`tools/match_funcs.py`) | 1,482 exact matches |
 | NRO links | done (`ds1.nro` ~51 MB) |
-| On the console | runs: menus and the first level (run 6-7), 720p tested; 540p not tested yet |
+| On the console | runs: menus and the first level; 540p at stock clocks (runs 7-13) and 720p overclocked (run 14, short) tested |
 | Shader library | 340 shaders, 2,829 DKSH (run 7: 95 % of the draws have both shaders) |
 | Rendering | right in the first level (run 10), after three clear fixes (Problems met, runs 7-9) |
 | Frame rate (720p, CPU 1785 MHz) | menus ~30 fps; in the level 20-27 fps, GPU 32-50 ms per frame at 1,000-2,700 draws |
@@ -68,6 +68,7 @@ not known until the first run.
 | 11 | Without telemetry, 540p stock: 21-29 fps, GPU 32-45 ms at 1,500-2,900 draws (GPU-bound). Geometry store full (1,722 evictions / 10 s); stable ranges checked every 2nd frame made the opening doors jump back | store 128 MB; ranges checked every frame again |
 | 12 | Profiled (telemetry): 80 passes for 4,010 draws, scene passes 30 ms of which draws 16 ms; passes cut every 256 draws by the partial submits | partial submits every 1,024 draws |
 | 13 | Same scenes, intervals over 1,500 draws: GPU 36.8 ms a frame (run 11: 42.3), fps 24.8 (24.5); light scenes 29-30 fps | open: still GPU-bound in heavy rooms |
+| 14 | 720p, CPU 1785 MHz (overclocked; the choice saved from the menu): a short session at 29.7-30 fps, GPU 8-32 ms at up to 1,400 draws, no errors | - |
 | 10 | Picture right; 17-29 fps at 540p stock, GPU 30-57 ms per frame at 1,500-4,600 draws; RWAudioCore mixer 66 % of a core (a per-sample IIR filter, 0x82644C38), XMA decoder 31 % | measured with telemetry on (1 ms stack sampling): to measure again without it |
 
 Diagnostics: `telemetria.flag` beside the NRO turns on the CPU stack profile from the start (`logs/rex/perfil_pilas.flag` does
