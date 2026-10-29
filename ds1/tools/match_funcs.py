@@ -1,9 +1,9 @@
 """Name the functions of a generated tree by matching their PPC bodies against a named recompiled tree (Dead Space 2's
-src_tu2, which has names from its prototype PDB). From gears2-nx; used here for Dead Space 3.
+src_tu2, which has names from its prototype PDB). From gears2-nx and ds3-nx.
 
 Each function becomes the sequence of its PPC instructions (from the codegen's comments) with branch targets and
 absolute-address halves (lis/addi/ori/lwz with large offsets) masked. Bodies with a unique exact match in both trees
-inherit the reference name (Dead Space 2 -> Dead Space 3: 5,460). fuzzy_find.py ranks the closest bodies for the names
+inherit the reference name (Dead Space 2 -> Dead Space 3: 5,460; -> Dead Space: 1,483). fuzzy_find.py ranks the closest bodies for the names
 that do not match exactly.
 Usage: match_funcs.py <named reference tree> <ds1/out/codegen/generated/default> <out.tsv>
 """

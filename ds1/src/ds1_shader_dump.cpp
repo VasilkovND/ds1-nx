@@ -1,8 +1,8 @@
 // ds1-nx - collects the game's shaders as it creates them, for the shader library.
 //
 // Why: the deko3d renderer draws with shaders translated ahead of time (XenosRecomp -> HLSL -> SPIR-V), found
-// by a fingerprint of each shader's container. Dead Space 2 kept its shaders RefPack-compressed inside its bigfiles,
-// and Dead Space 3 is expected to do the same; every shader, however, goes through the XDK's
+// by a fingerprint of each shader's container. Dead Space 2 kept its shaders RefPack-compressed inside its bigfiles;
+// Dead Space (2008) keeps its own in the executable and its bigfiles. Every shader, however, goes through the XDK's
 // ds1_D3DDevice_CreateVertexShader / ds1_D3DDevice_CreatePixelShader with its container already in guest memory
 // (r3 = pFunction). Wrapping those two functions catches every shader the game really uses, whatever its archive
 // format. The two names come from codegen/names.toml; CMake compiles this file only when both are there.

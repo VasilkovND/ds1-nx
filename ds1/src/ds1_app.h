@@ -38,7 +38,7 @@ REXCVAR_DEFINE_BOOL(ds1_atajos_depuracion, false, "DS1",
 #include <rex/ui/switch_apm.h>
 #endif
 // Handheld GPU clock through Horizon's own performance profiles (the ones commercial games pick; no overclock): at
-// stock the handheld GPU runs at 307.2 MHz, and run 22 needed 31-37 ms of GPU per frame at 540p. 460 asks for
+// stock the handheld GPU runs at 307.2 MHz, and Dead Space 3's run 22 needed 31-37 ms of GPU per frame at 540p. 460 asks for
 // 0x92220008 (GPU 460.8 MHz, CPU 1020 and memory 1331.2 as before; the SDK's switch_apm.cpp, from the NFS port, tries
 // the pairs that keep the memory clock first and puts it back if it rises). Docked, or with sys-clk setting the
 // clocks, nothing changes.
@@ -112,7 +112,7 @@ class Ds1App : public rex::ReXApp {
     ds1::cpu::Configurar();
     ds1::menu::Instalar(*runtime());
 #if defined(__SWITCH__)
-    // Not on an overclocked console: there the profile became the clocks that stayed (run 27: sys-clk had the CPU at
+    // Not on an overclocked console: there the profile became the clocks that stayed (ds3-nx run 27: sys-clk had the CPU at
     // 1785 and the GPU at 614.4 at start, and from the first seconds on everything ran at the profile's 1020 / 460.8 /
     // 1331.2, the fights CPU-bound at 23 fps; in runs 25 and 26 sys-clk had put its clocks back).
     const uint32_t cpu_mhz = ds1::resolucion::CpuMhz();
@@ -127,7 +127,7 @@ class Ds1App : public rex::ReXApp {
 
   // No achievement toast. Its ImGui dialog, created with the first achievement (the end of the prologue), is a UI
   // drawer for the rest of the session, and with one the presenter paints from the UI thread on request: from that
-  // moment (run 17) the screen stayed black with the sound going, then flickered. The achievement is still unlocked
+  // moment (ds3-nx run 17) the screen stayed black with the sound going, then flickered. The achievement is still unlocked
   // and saved.
   std::unique_ptr<rex::ui::AchievementNotificationDialog> CreateAchievementNotificationDialog() override {
     REXLOG_INFO("ds1: achievement toast off (it would move presentation to the UI thread)");

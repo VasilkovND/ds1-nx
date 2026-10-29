@@ -1,8 +1,66 @@
-# Installing ds1-nx
+# Установка ds1-nx (Dead Space для Nintendo Switch)
 
-1. Copy the disc's `default.xex`, `bigfile0.viv` and `bigfile1.viv` to `sdmc:/switch/ds1-nx/`.
-2. Copy `ds1-nx.nro` there too.
-3. Start it from the Homebrew Menu (title override, full RAM). The first start dumps the game's shaders to
-   `shaders_dump/` beside the NRO; `ds1/tools/shaders.sh` turns them into `ds1_shaders.dslib` and the DKSH cache.
+ds1-nx — нативный порт Dead Space (Xbox 360, 2008) для Switch в виде homebrew-программы. **Версия 1.0.0, играбельна:**
+на стоковых частотах 540p и 30 кадров/с в большинстве мест, в тяжёлых боях и комнатах просадки примерно до 25 кадров/с;
+с разгоном 720p и 30 кадров/с. Готовых файлов не распространяется: код игры, шейдеры и программа собираются у вас на
+компьютере **из вашей собственной копии** игры.
 
-ZL + ZR + Minus opens the options menu (720p for an overclocked console, 540p for stock clocks; next start).
+## Что понадобится
+
+| Что | Подробности |
+| --- | --- |
+| Nintendo Switch | С кастомной прошивкой **Atmosphère** и Homebrew Menu |
+| Карта microSD | Свободно **~8 ГБ**, exFAT или FAT32 (самый большой файл игры 3,4 ГБ) |
+| Файлы вашего диска | Dead Space для Xbox 360: `default.xex`, `bigfile0.viv`, `bigfile1.viv` из образа диска (например, распакованного extract-xiso) |
+| Компьютер | **macOS** (проверено) или Linux (не проверялось), ~10 ГБ свободного места, интернет |
+
+Проверено с диском **Media ID 6A216DCC** (`default.xex` версии 0.0.0.2, SHA-256 в [ds1/PORTING.md](ds1/PORTING.md)).
+Другой `default.xex` сборка пробует с предупреждением.
+
+## Шаг 1. Инструменты (один раз)
+
+1. **Инструменты Xcode:** `xcode-select --install`.
+2. **Homebrew** (https://brew.sh), затем `brew install cmake ninja python git`.
+3. **devkitPro:** установщик со страницы https://github.com/devkitPro/pacman/releases, затем
+   `sudo dkp-pacman -S switch-dev deko3d`.
+4. **Vulkan SDK** (https://vulkan.lunarg.com): нужны `dxc` и `spirv-val` для шейдеров.
+
+## Шаг 2. Собрать программу
+
+```
+git clone --recursive https://github.com/VasilkovND/ds1-nx
+cd ds1-nx
+ds1/tools/build_mac.sh <папка с default.xex>
+```
+
+Первая сборка: ~10 минут на генерацию кода и 15–20 минут на компиляцию. Результат: `ds1/out/sw/ds1.nro`.
+
+## Шаг 3. Карта памяти
+
+Скопируйте в `sdmc:/switch/ds1-nx/`: `ds1/out/sw/ds1.nro` под именем `ds1-nx.nro` и с вашего диска `default.xex`,
+`bigfile0.viv`, `bigfile1.viv`.
+
+## Запуск
+
+Зажмите **R** и запустите любую игру → откроется Homebrew Menu → **Dead Space**. Из альбома (режим апплета) памяти не
+хватит. Логи — в `sdmc:/switch/ds1-nx/logs/`. При первом запуске программа сохраняет шейдеры игры в `shaders_dump/`:
+скопируйте эту папку в `ds1/out/shaders_dump/` на компьютере и запустите `ds1/tools/shaders.sh` (а затем снова
+`build_mac.sh`), чтобы получить `ds1_shaders.dslib` и `shadercache_dksh.bin`, и положите их рядом с NRO. Без
+библиотеки шейдеров большая часть сцены не рисуется; шейдеры, которых ещё нет в библиотеке, игра дописывает в
+`shaders_dump/` при каждом запуске, так что после новых мест библиотеку стоит пересобрать.
+
+## Разрешение и меню
+
+**ZL + ZR + Минус** открывает меню поверх игры: **вверх / вниз** выбирают строку (разрешение, вибрация), **влево /
+вправо** меняют силу вибрации, **A** сохраняет, **B** закрывает. Пока меню открыто, игра не видит нажатий. Разрешение
+сохраняется в `ds1_resolucion.txt` рядом с NRO и действует **со следующего запуска** (игра задаёт размер кадра при
+старте).
+
+| Режим | Для кого | Кадр |
+| --- | --- | --- |
+| **720p** | консоли с разгоном (по умолчанию, если процессор работает на 1500 МГц и выше) | 1280x720, как в оригинале |
+| **540p** | стоковые частоты (по умолчанию в остальных случаях) | 960x540, растягивается на экран |
+
+В портативном режиме порт просит у системы штатный профиль с GPU 460,8 МГц (такой используют обычные игры; это не
+разгон, частоты процессора и памяти не повышаются). В доке или на разогнанной консоли (CPU выше 1020 МГц при запуске)
+порт ничего не просит. `ds1_gpu_portatil_mhz = 0` в `ds1.toml` рядом с NRO оставит стоковые 307,2 МГц.

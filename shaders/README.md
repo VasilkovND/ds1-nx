@@ -1,6 +1,6 @@
 # Shaders
 
-The shader toolchain. Dead Space 3's shaders are Xbox 360 (Xenos) microcode in containers of the 2008 format. The
+The shader toolchain (from ds3-nx). Dead Space's shaders are Xbox 360 (Xenos) microcode in containers of the 2008 format. The
 console dumps every container the game creates (`shaders_dump/{vs,ps}_<xxh3>.bin`, by
 `ds1/src/ds1_shader_dump.cpp`); these tools translate them on the PC, ahead of time, into a SPIR-V library,
 `ds1_shaders.dslib`, and optionally a DKSH cache, `shadercache_dksh.bin`, which the deko3d renderer loads at startup.

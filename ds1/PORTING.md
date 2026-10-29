@@ -12,6 +12,7 @@ problem met.
 | Codegen from `default.xex` (host `rexglue` v0.10.0 + Hell's Gate's patch, as ds3-nx) | done: 184 units, 89 branch targets named (three rounds), 6 traps made gotos, 0 left |
 | Names from Dead Space 2 (`tools/match_funcs.py`) | 1,482 exact matches |
 | NRO links | done (`ds1.nro` ~51 MB) |
+| 1.0.0 | after run 14: the first level playable, 540p stock / 720p overclocked |
 | On the console | runs: menus and the first level; 540p at stock clocks (runs 7-13) and 720p overclocked (run 14, short) tested |
 | Shader library | 340 shaders, 2,829 DKSH (run 7: 95 % of the draws have both shaders) |
 | Rendering | right in the first level (run 10), after three clear fixes (Problems met, runs 7-9) |
