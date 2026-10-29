@@ -87,6 +87,10 @@ class Ds1App : public rex::ReXApp {
     // again): 128 MB. Stable ranges are still checked every frame (nfsmw_dk_geometria_confianza 1): checked every 2nd
     // frame, the opening doors (animated on the CPU) jumped back and repeated (run 11).
     DefaultFlag("nfsmw_dk_geometria_mb", "128");
+    // The partial submit every 256 draws (Dead Space 3: the GPU idle while the frame was recorded) ends the pass, and
+    // the next draw binds its targets again: run 12's profiled frame had 80 passes for 4,010 draws, many of exactly 256,
+    // with the GPU idle between jobs only 1.3 ms a frame (GPU-bound at 30-45 ms). Every 1,024 draws.
+    DefaultFlag("nfsmw_dk_envio_parcial", "1024");
 #if defined(__SWITCH__)
     REXCVAR_SET(switch_atajos_depuracion, REXCVAR_GET(ds1_atajos_depuracion));
 #endif
