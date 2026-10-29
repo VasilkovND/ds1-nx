@@ -65,6 +65,9 @@ not known until the first run.
 | 7 | Walls and floors see-through, translucent characters: the clear of the material target (00008701: stencil on, no depth write) was taken as a depth clear and wiped the G-buffer's depth | stencil-only clears leave the depth |
 | 8 | Black light buffer: that clear no longer cleared the stencil, and the light volumes' stencil test failed | `sdk-patches/0033`: a stencil-only clear |
 | 9 | Walls, Isaac and the space backdrop through each other: a second such clear, in depth-only mode (mode 5), still wiped the depth | stencil-only in any mode |
+| 11 | Without telemetry, 540p stock: 21-29 fps, GPU 32-45 ms at 1,500-2,900 draws (GPU-bound). Geometry store full (1,722 evictions / 10 s); stable ranges checked every 2nd frame made the opening doors jump back | store 128 MB; ranges checked every frame again |
+| 12 | Profiled (telemetry): 80 passes for 4,010 draws, scene passes 30 ms of which draws 16 ms; passes cut every 256 draws by the partial submits | partial submits every 1,024 draws |
+| 13 | Same scenes, intervals over 1,500 draws: GPU 36.8 ms a frame (run 11: 42.3), fps 24.8 (24.5); light scenes 29-30 fps | open: still GPU-bound in heavy rooms |
 | 10 | Picture right; 17-29 fps at 540p stock, GPU 30-57 ms per frame at 1,500-4,600 draws; RWAudioCore mixer 66 % of a core (a per-sample IIR filter, 0x82644C38), XMA decoder 31 % | measured with telemetry on (1 ms stack sampling): to measure again without it |
 
 Diagnostics: `telemetria.flag` beside the NRO turns on the CPU stack profile from the start (`logs/rex/perfil_pilas.flag` does
