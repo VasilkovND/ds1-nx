@@ -2116,8 +2116,10 @@ name = "gap_825F7AB8"
 [entrypoint.functions.0x825F7E98]
 name = "gap_825F7E98"
 
-[entrypoint.functions.0x825F9064]
-name = "gap_825F9064"
+# Dropped gap_825F9064 and unresolved_target_825F7F2C: both sit inside sub_825F7EB0
+# (decontam/ceiling script path). Naming them split the function so `b 0x825F7F2C`
+# became a call into a frameless clone and crashed (guest read 0x6). Same class as
+# PORTING.md run 5.
 
 [entrypoint.functions.0x825F922C]
 name = "gap_825F922C"
@@ -3058,17 +3060,27 @@ name = "gap_82BDA5D0"
 [entrypoint.functions.0x82BDD830]
 name = "gap_82BDD830"
 
+# Chapter 3 crash: unregistered calls from lr 0x828A0940 (logs/ds1_001.log).
+[entrypoint.functions.0x82C10510]
+name = "unresolved_target_82C10510"
+
 [entrypoint.functions.0x82C10BB0]
 name = "gap_82C10BB0"
 
 [entrypoint.functions.0x82C10F30]
 name = "gap_82C10F30"
 
+[entrypoint.functions.0x82C10F58]
+name = "unresolved_target_82C10F58"
+
 [entrypoint.functions.0x82C10FA0]
 name = "gap_82C10FA0"
 
 [entrypoint.functions.0x82C11020]
 name = "gap_82C11020"
+
+[entrypoint.functions.0x82C11928]
+name = "unresolved_target_82C11928"
 
 [entrypoint.functions.0x82C11A58]
 name = "gap_82C11A58"
@@ -4154,8 +4166,7 @@ name = "unresolved_target_825EF910"
 [entrypoint.functions.0x825F1BC8]
 name = "unresolved_target_825F1BC8"
 
-[entrypoint.functions.0x825F7F2C]
-name = "unresolved_target_825F7F2C"
+# 0x825F7F2C dropped: mid-loop of sub_825F7EB0 (see note near gap_825F7E98).
 
 [entrypoint.functions.0x825F93DC]
 name = "unresolved_target_825F93DC"

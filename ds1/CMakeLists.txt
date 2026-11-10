@@ -29,6 +29,7 @@ add_executable(ds1
     src/ds1_shaders.cpp
     src/ds1_cpu.cpp
     src/ds1_menu.cpp
+    src/ds1_lua_errors.cpp
     # The shader library reader, shared with the PC tools (shaders/).
     ${CMAKE_CURRENT_SOURCE_DIR}/../shaders/ds_shader_library.cpp
 )
