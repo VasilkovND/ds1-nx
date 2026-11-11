@@ -102,6 +102,14 @@ license, and the shader translator changes under MIT.
 
 ## Credits
 
+- **[AntozorJkzor](https://github.com/AntozorJkzor)** — co-author of this port, with my biggest thanks. His
+  pull request #2 found and fixed the crash that made chapter 3 unplayable: in recompiled code the CRT's
+  `longjmp` — the mechanism every Lua error unwinds through — restored the guest registers but never left the
+  host function that raised the error, so a script that errored kept running on another frame's stack and the
+  game died reading garbage (`guest 0x6`). His `ds1_lua_errors.cpp` makes `luaD_rawrunprotected` native (a host
+  `setjmp` where the guest's was) and turns the Lua `longjmp` back into a real host `longjmp`, so script errors
+  are caught and reported the way `lua_pcall` expects. Without that fix the port was only playable to chapter 3's
+  door.
 - **[bifftannen1](https://github.com/bifftannen1/Dead-Space-2-Recomp)**: Dead-Space-2-Recomp, whose PDB-named code
   gave this port its function names (matched by body).
 - **[ds3-nx](https://github.com/VasilkovND/ds3-nx), [ds2-nx](https://github.com/VasilkovND/ds2-nx),
