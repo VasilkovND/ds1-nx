@@ -4512,3 +4512,1049 @@ name = "ds1_rw_audio_Compressor1_Process"
 # (0x823FAD78, fuzzy 0.853) with the device + 15004.
 [entrypoint.functions.0x823E7B70]
 name = "ds1_D3DDevice_SetGammaRamp"
+
+# Static destructors registered at run time with the CRT table at 0x82DE9F30/34 (the registration thunks
+# 'lis r11, 0x82C10000; addi r3, r11, imm; b 0x8289B460' list them). Every entry is a real function start; without
+# a name the call at exit time logs 'unregistered function' and the game crashes (chapter 3 load, runs 15-20).
+
+[entrypoint.functions.0x82C10330]
+name = "atexit_cb_82C10330"
+
+[entrypoint.functions.0x82C10348]
+name = "atexit_cb_82C10348"
+
+[entrypoint.functions.0x82C10358]
+name = "atexit_cb_82C10358"
+
+[entrypoint.functions.0x82C10360]
+name = "atexit_cb_82C10360"
+
+[entrypoint.functions.0x82C10380]
+name = "atexit_cb_82C10380"
+
+[entrypoint.functions.0x82C10388]
+name = "atexit_cb_82C10388"
+
+[entrypoint.functions.0x82C10390]
+name = "atexit_cb_82C10390"
+
+[entrypoint.functions.0x82C10398]
+name = "atexit_cb_82C10398"
+
+[entrypoint.functions.0x82C103A0]
+name = "atexit_cb_82C103A0"
+
+[entrypoint.functions.0x82C103A8]
+name = "atexit_cb_82C103A8"
+
+[entrypoint.functions.0x82C103B0]
+name = "atexit_cb_82C103B0"
+
+[entrypoint.functions.0x82C103C0]
+name = "atexit_cb_82C103C0"
+
+[entrypoint.functions.0x82C103C8]
+name = "atexit_cb_82C103C8"
+
+[entrypoint.functions.0x82C103D0]
+name = "atexit_cb_82C103D0"
+
+[entrypoint.functions.0x82C103D8]
+name = "atexit_cb_82C103D8"
+
+[entrypoint.functions.0x82C103F0]
+name = "atexit_cb_82C103F0"
+
+[entrypoint.functions.0x82C103F8]
+name = "atexit_cb_82C103F8"
+
+[entrypoint.functions.0x82C10400]
+name = "atexit_cb_82C10400"
+
+[entrypoint.functions.0x82C10408]
+name = "atexit_cb_82C10408"
+
+[entrypoint.functions.0x82C10410]
+name = "atexit_cb_82C10410"
+
+[entrypoint.functions.0x82C10418]
+name = "atexit_cb_82C10418"
+
+[entrypoint.functions.0x82C10420]
+name = "atexit_cb_82C10420"
+
+[entrypoint.functions.0x82C10428]
+name = "atexit_cb_82C10428"
+
+[entrypoint.functions.0x82C10430]
+name = "atexit_cb_82C10430"
+
+[entrypoint.functions.0x82C10438]
+name = "atexit_cb_82C10438"
+
+[entrypoint.functions.0x82C10458]
+name = "atexit_cb_82C10458"
+
+[entrypoint.functions.0x82C10470]
+name = "atexit_cb_82C10470"
+
+[entrypoint.functions.0x82C10488]
+name = "atexit_cb_82C10488"
+
+[entrypoint.functions.0x82C10498]
+name = "atexit_cb_82C10498"
+
+[entrypoint.functions.0x82C104B0]
+name = "atexit_cb_82C104B0"
+
+[entrypoint.functions.0x82C104C0]
+name = "atexit_cb_82C104C0"
+
+[entrypoint.functions.0x82C104D8]
+name = "atexit_cb_82C104D8"
+
+[entrypoint.functions.0x82C104E0]
+name = "atexit_cb_82C104E0"
+
+[entrypoint.functions.0x82C104E8]
+name = "atexit_cb_82C104E8"
+
+[entrypoint.functions.0x82C10510]
+name = "atexit_cb_82C10510"
+
+[entrypoint.functions.0x82C10518]
+name = "atexit_cb_82C10518"
+
+[entrypoint.functions.0x82C10520]
+name = "atexit_cb_82C10520"
+
+[entrypoint.functions.0x82C10538]
+name = "atexit_cb_82C10538"
+
+[entrypoint.functions.0x82C10540]
+name = "atexit_cb_82C10540"
+
+[entrypoint.functions.0x82C10548]
+name = "atexit_cb_82C10548"
+
+[entrypoint.functions.0x82C10550]
+name = "atexit_cb_82C10550"
+
+[entrypoint.functions.0x82C10558]
+name = "atexit_cb_82C10558"
+
+[entrypoint.functions.0x82C10560]
+name = "atexit_cb_82C10560"
+
+[entrypoint.functions.0x82C10568]
+name = "atexit_cb_82C10568"
+
+[entrypoint.functions.0x82C10570]
+name = "atexit_cb_82C10570"
+
+[entrypoint.functions.0x82C10578]
+name = "atexit_cb_82C10578"
+
+[entrypoint.functions.0x82C105E8]
+name = "atexit_cb_82C105E8"
+
+[entrypoint.functions.0x82C105F0]
+name = "atexit_cb_82C105F0"
+
+[entrypoint.functions.0x82C105F8]
+name = "atexit_cb_82C105F8"
+
+[entrypoint.functions.0x82C10600]
+name = "atexit_cb_82C10600"
+
+[entrypoint.functions.0x82C10670]
+name = "atexit_cb_82C10670"
+
+[entrypoint.functions.0x82C10690]
+name = "atexit_cb_82C10690"
+
+[entrypoint.functions.0x82C106A8]
+name = "atexit_cb_82C106A8"
+
+[entrypoint.functions.0x82C106C0]
+name = "atexit_cb_82C106C0"
+
+[entrypoint.functions.0x82C106D8]
+name = "atexit_cb_82C106D8"
+
+[entrypoint.functions.0x82C106F0]
+name = "atexit_cb_82C106F0"
+
+[entrypoint.functions.0x82C10708]
+name = "atexit_cb_82C10708"
+
+[entrypoint.functions.0x82C10720]
+name = "atexit_cb_82C10720"
+
+[entrypoint.functions.0x82C10728]
+name = "atexit_cb_82C10728"
+
+[entrypoint.functions.0x82C10730]
+name = "atexit_cb_82C10730"
+
+[entrypoint.functions.0x82C10738]
+name = "atexit_cb_82C10738"
+
+[entrypoint.functions.0x82C10758]
+name = "atexit_cb_82C10758"
+
+[entrypoint.functions.0x82C10770]
+name = "atexit_cb_82C10770"
+
+[entrypoint.functions.0x82C10788]
+name = "atexit_cb_82C10788"
+
+[entrypoint.functions.0x82C107A0]
+name = "atexit_cb_82C107A0"
+
+[entrypoint.functions.0x82C107A8]
+name = "atexit_cb_82C107A8"
+
+[entrypoint.functions.0x82C107C8]
+name = "atexit_cb_82C107C8"
+
+[entrypoint.functions.0x82C107D0]
+name = "atexit_cb_82C107D0"
+
+[entrypoint.functions.0x82C107F0]
+name = "atexit_cb_82C107F0"
+
+[entrypoint.functions.0x82C107F8]
+name = "atexit_cb_82C107F8"
+
+[entrypoint.functions.0x82C10808]
+name = "atexit_cb_82C10808"
+
+[entrypoint.functions.0x82C10810]
+name = "atexit_cb_82C10810"
+
+[entrypoint.functions.0x82C10820]
+name = "atexit_cb_82C10820"
+
+[entrypoint.functions.0x82C10828]
+name = "atexit_cb_82C10828"
+
+[entrypoint.functions.0x82C10830]
+name = "atexit_cb_82C10830"
+
+[entrypoint.functions.0x82C10838]
+name = "atexit_cb_82C10838"
+
+[entrypoint.functions.0x82C10840]
+name = "atexit_cb_82C10840"
+
+[entrypoint.functions.0x82C10848]
+name = "atexit_cb_82C10848"
+
+[entrypoint.functions.0x82C10850]
+name = "atexit_cb_82C10850"
+
+[entrypoint.functions.0x82C10858]
+name = "atexit_cb_82C10858"
+
+[entrypoint.functions.0x82C10860]
+name = "atexit_cb_82C10860"
+
+[entrypoint.functions.0x82C10868]
+name = "atexit_cb_82C10868"
+
+[entrypoint.functions.0x82C10870]
+name = "atexit_cb_82C10870"
+
+[entrypoint.functions.0x82C10878]
+name = "atexit_cb_82C10878"
+
+[entrypoint.functions.0x82C10880]
+name = "atexit_cb_82C10880"
+
+[entrypoint.functions.0x82C10888]
+name = "atexit_cb_82C10888"
+
+[entrypoint.functions.0x82C10890]
+name = "atexit_cb_82C10890"
+
+[entrypoint.functions.0x82C10898]
+name = "atexit_cb_82C10898"
+
+[entrypoint.functions.0x82C108A0]
+name = "atexit_cb_82C108A0"
+
+[entrypoint.functions.0x82C108A8]
+name = "atexit_cb_82C108A8"
+
+[entrypoint.functions.0x82C108B0]
+name = "atexit_cb_82C108B0"
+
+[entrypoint.functions.0x82C108B8]
+name = "atexit_cb_82C108B8"
+
+[entrypoint.functions.0x82C108C0]
+name = "atexit_cb_82C108C0"
+
+[entrypoint.functions.0x82C108C8]
+name = "atexit_cb_82C108C8"
+
+[entrypoint.functions.0x82C108D0]
+name = "atexit_cb_82C108D0"
+
+[entrypoint.functions.0x82C108D8]
+name = "atexit_cb_82C108D8"
+
+[entrypoint.functions.0x82C108E0]
+name = "atexit_cb_82C108E0"
+
+[entrypoint.functions.0x82C10900]
+name = "atexit_cb_82C10900"
+
+[entrypoint.functions.0x82C10940]
+name = "atexit_cb_82C10940"
+
+[entrypoint.functions.0x82C10958]
+name = "atexit_cb_82C10958"
+
+[entrypoint.functions.0x82C10960]
+name = "atexit_cb_82C10960"
+
+[entrypoint.functions.0x82C10968]
+name = "atexit_cb_82C10968"
+
+[entrypoint.functions.0x82C10970]
+name = "atexit_cb_82C10970"
+
+[entrypoint.functions.0x82C10978]
+name = "atexit_cb_82C10978"
+
+[entrypoint.functions.0x82C10980]
+name = "atexit_cb_82C10980"
+
+[entrypoint.functions.0x82C10988]
+name = "atexit_cb_82C10988"
+
+[entrypoint.functions.0x82C10990]
+name = "atexit_cb_82C10990"
+
+[entrypoint.functions.0x82C10998]
+name = "atexit_cb_82C10998"
+
+[entrypoint.functions.0x82C109A0]
+name = "atexit_cb_82C109A0"
+
+[entrypoint.functions.0x82C109A8]
+name = "atexit_cb_82C109A8"
+
+[entrypoint.functions.0x82C109B0]
+name = "atexit_cb_82C109B0"
+
+[entrypoint.functions.0x82C109B8]
+name = "atexit_cb_82C109B8"
+
+[entrypoint.functions.0x82C109C0]
+name = "atexit_cb_82C109C0"
+
+[entrypoint.functions.0x82C109C8]
+name = "atexit_cb_82C109C8"
+
+[entrypoint.functions.0x82C10A00]
+name = "atexit_cb_82C10A00"
+
+[entrypoint.functions.0x82C10A28]
+name = "atexit_cb_82C10A28"
+
+[entrypoint.functions.0x82C10A30]
+name = "atexit_cb_82C10A30"
+
+[entrypoint.functions.0x82C10A38]
+name = "atexit_cb_82C10A38"
+
+[entrypoint.functions.0x82C10A58]
+name = "atexit_cb_82C10A58"
+
+[entrypoint.functions.0x82C10A70]
+name = "atexit_cb_82C10A70"
+
+[entrypoint.functions.0x82C10A88]
+name = "atexit_cb_82C10A88"
+
+[entrypoint.functions.0x82C10A90]
+name = "atexit_cb_82C10A90"
+
+[entrypoint.functions.0x82C10AA8]
+name = "atexit_cb_82C10AA8"
+
+[entrypoint.functions.0x82C10AB0]
+name = "atexit_cb_82C10AB0"
+
+[entrypoint.functions.0x82C10AC8]
+name = "atexit_cb_82C10AC8"
+
+[entrypoint.functions.0x82C10AD0]
+name = "atexit_cb_82C10AD0"
+
+[entrypoint.functions.0x82C10AD8]
+name = "atexit_cb_82C10AD8"
+
+[entrypoint.functions.0x82C10AE0]
+name = "atexit_cb_82C10AE0"
+
+[entrypoint.functions.0x82C10AE8]
+name = "atexit_cb_82C10AE8"
+
+[entrypoint.functions.0x82C10AF0]
+name = "atexit_cb_82C10AF0"
+
+[entrypoint.functions.0x82C10B00]
+name = "atexit_cb_82C10B00"
+
+[entrypoint.functions.0x82C10B08]
+name = "atexit_cb_82C10B08"
+
+[entrypoint.functions.0x82C10B10]
+name = "atexit_cb_82C10B10"
+
+[entrypoint.functions.0x82C10B18]
+name = "atexit_cb_82C10B18"
+
+[entrypoint.functions.0x82C10B20]
+name = "atexit_cb_82C10B20"
+
+[entrypoint.functions.0x82C10B28]
+name = "atexit_cb_82C10B28"
+
+[entrypoint.functions.0x82C10B30]
+name = "atexit_cb_82C10B30"
+
+[entrypoint.functions.0x82C10B38]
+name = "atexit_cb_82C10B38"
+
+[entrypoint.functions.0x82C10B40]
+name = "atexit_cb_82C10B40"
+
+[entrypoint.functions.0x82C10B48]
+name = "atexit_cb_82C10B48"
+
+[entrypoint.functions.0x82C10B50]
+name = "atexit_cb_82C10B50"
+
+[entrypoint.functions.0x82C10B58]
+name = "atexit_cb_82C10B58"
+
+[entrypoint.functions.0x82C10B60]
+name = "atexit_cb_82C10B60"
+
+[entrypoint.functions.0x82C10B88]
+name = "atexit_cb_82C10B88"
+
+[entrypoint.functions.0x82C10C58]
+name = "atexit_cb_82C10C58"
+
+[entrypoint.functions.0x82C10EF8]
+name = "atexit_cb_82C10EF8"
+
+[entrypoint.functions.0x82C10F08]
+name = "atexit_cb_82C10F08"
+
+[entrypoint.functions.0x82C10F58]
+name = "atexit_cb_82C10F58"
+
+[entrypoint.functions.0x82C10F68]
+name = "atexit_cb_82C10F68"
+
+[entrypoint.functions.0x82C10F78]
+name = "atexit_cb_82C10F78"
+
+[entrypoint.functions.0x82C10FB0]
+name = "atexit_cb_82C10FB0"
+
+[entrypoint.functions.0x82C10FD8]
+name = "atexit_cb_82C10FD8"
+
+[entrypoint.functions.0x82C10FF8]
+name = "atexit_cb_82C10FF8"
+
+[entrypoint.functions.0x82C11038]
+name = "atexit_cb_82C11038"
+
+[entrypoint.functions.0x82C11050]
+name = "atexit_cb_82C11050"
+
+[entrypoint.functions.0x82C11098]
+name = "atexit_cb_82C11098"
+
+[entrypoint.functions.0x82C11118]
+name = "atexit_cb_82C11118"
+
+[entrypoint.functions.0x82C112A8]
+name = "atexit_cb_82C112A8"
+
+[entrypoint.functions.0x82C112B0]
+name = "atexit_cb_82C112B0"
+
+[entrypoint.functions.0x82C112D0]
+name = "atexit_cb_82C112D0"
+
+[entrypoint.functions.0x82C112E8]
+name = "atexit_cb_82C112E8"
+
+[entrypoint.functions.0x82C11300]
+name = "atexit_cb_82C11300"
+
+[entrypoint.functions.0x82C11330]
+name = "atexit_cb_82C11330"
+
+[entrypoint.functions.0x82C11348]
+name = "atexit_cb_82C11348"
+
+[entrypoint.functions.0x82C11378]
+name = "atexit_cb_82C11378"
+
+[entrypoint.functions.0x82C113A8]
+name = "atexit_cb_82C113A8"
+
+[entrypoint.functions.0x82C113E0]
+name = "atexit_cb_82C113E0"
+
+[entrypoint.functions.0x82C11418]
+name = "atexit_cb_82C11418"
+
+[entrypoint.functions.0x82C11430]
+name = "atexit_cb_82C11430"
+
+[entrypoint.functions.0x82C11438]
+name = "atexit_cb_82C11438"
+
+[entrypoint.functions.0x82C11440]
+name = "atexit_cb_82C11440"
+
+[entrypoint.functions.0x82C11448]
+name = "atexit_cb_82C11448"
+
+[entrypoint.functions.0x82C11450]
+name = "atexit_cb_82C11450"
+
+[entrypoint.functions.0x82C11458]
+name = "atexit_cb_82C11458"
+
+[entrypoint.functions.0x82C11460]
+name = "atexit_cb_82C11460"
+
+[entrypoint.functions.0x82C11468]
+name = "atexit_cb_82C11468"
+
+[entrypoint.functions.0x82C11470]
+name = "atexit_cb_82C11470"
+
+[entrypoint.functions.0x82C11478]
+name = "atexit_cb_82C11478"
+
+[entrypoint.functions.0x82C11480]
+name = "atexit_cb_82C11480"
+
+[entrypoint.functions.0x82C11488]
+name = "atexit_cb_82C11488"
+
+[entrypoint.functions.0x82C11490]
+name = "atexit_cb_82C11490"
+
+[entrypoint.functions.0x82C11498]
+name = "atexit_cb_82C11498"
+
+[entrypoint.functions.0x82C114A0]
+name = "atexit_cb_82C114A0"
+
+[entrypoint.functions.0x82C114A8]
+name = "atexit_cb_82C114A8"
+
+[entrypoint.functions.0x82C114B0]
+name = "atexit_cb_82C114B0"
+
+[entrypoint.functions.0x82C114B8]
+name = "atexit_cb_82C114B8"
+
+[entrypoint.functions.0x82C114C0]
+name = "atexit_cb_82C114C0"
+
+[entrypoint.functions.0x82C114C8]
+name = "atexit_cb_82C114C8"
+
+[entrypoint.functions.0x82C114D0]
+name = "atexit_cb_82C114D0"
+
+[entrypoint.functions.0x82C114D8]
+name = "atexit_cb_82C114D8"
+
+[entrypoint.functions.0x82C114E0]
+name = "atexit_cb_82C114E0"
+
+[entrypoint.functions.0x82C114E8]
+name = "atexit_cb_82C114E8"
+
+[entrypoint.functions.0x82C114F0]
+name = "atexit_cb_82C114F0"
+
+[entrypoint.functions.0x82C114F8]
+name = "atexit_cb_82C114F8"
+
+[entrypoint.functions.0x82C11500]
+name = "atexit_cb_82C11500"
+
+[entrypoint.functions.0x82C11508]
+name = "atexit_cb_82C11508"
+
+[entrypoint.functions.0x82C11510]
+name = "atexit_cb_82C11510"
+
+[entrypoint.functions.0x82C11518]
+name = "atexit_cb_82C11518"
+
+[entrypoint.functions.0x82C11520]
+name = "atexit_cb_82C11520"
+
+[entrypoint.functions.0x82C11528]
+name = "atexit_cb_82C11528"
+
+[entrypoint.functions.0x82C11530]
+name = "atexit_cb_82C11530"
+
+[entrypoint.functions.0x82C11538]
+name = "atexit_cb_82C11538"
+
+[entrypoint.functions.0x82C11550]
+name = "atexit_cb_82C11550"
+
+[entrypoint.functions.0x82C11568]
+name = "atexit_cb_82C11568"
+
+[entrypoint.functions.0x82C11570]
+name = "atexit_cb_82C11570"
+
+[entrypoint.functions.0x82C11578]
+name = "atexit_cb_82C11578"
+
+[entrypoint.functions.0x82C11580]
+name = "atexit_cb_82C11580"
+
+[entrypoint.functions.0x82C11590]
+name = "atexit_cb_82C11590"
+
+[entrypoint.functions.0x82C115A8]
+name = "atexit_cb_82C115A8"
+
+[entrypoint.functions.0x82C115C0]
+name = "atexit_cb_82C115C0"
+
+[entrypoint.functions.0x82C115D8]
+name = "atexit_cb_82C115D8"
+
+[entrypoint.functions.0x82C115F0]
+name = "atexit_cb_82C115F0"
+
+[entrypoint.functions.0x82C11608]
+name = "atexit_cb_82C11608"
+
+[entrypoint.functions.0x82C11620]
+name = "atexit_cb_82C11620"
+
+[entrypoint.functions.0x82C11638]
+name = "atexit_cb_82C11638"
+
+[entrypoint.functions.0x82C11650]
+name = "atexit_cb_82C11650"
+
+[entrypoint.functions.0x82C11668]
+name = "atexit_cb_82C11668"
+
+[entrypoint.functions.0x82C11680]
+name = "atexit_cb_82C11680"
+
+[entrypoint.functions.0x82C11698]
+name = "atexit_cb_82C11698"
+
+[entrypoint.functions.0x82C116B0]
+name = "atexit_cb_82C116B0"
+
+[entrypoint.functions.0x82C116C8]
+name = "atexit_cb_82C116C8"
+
+[entrypoint.functions.0x82C116E0]
+name = "atexit_cb_82C116E0"
+
+[entrypoint.functions.0x82C116F8]
+name = "atexit_cb_82C116F8"
+
+[entrypoint.functions.0x82C11710]
+name = "atexit_cb_82C11710"
+
+[entrypoint.functions.0x82C11728]
+name = "atexit_cb_82C11728"
+
+[entrypoint.functions.0x82C11740]
+name = "atexit_cb_82C11740"
+
+[entrypoint.functions.0x82C11758]
+name = "atexit_cb_82C11758"
+
+[entrypoint.functions.0x82C11770]
+name = "atexit_cb_82C11770"
+
+[entrypoint.functions.0x82C11788]
+name = "atexit_cb_82C11788"
+
+[entrypoint.functions.0x82C117A0]
+name = "atexit_cb_82C117A0"
+
+[entrypoint.functions.0x82C117B8]
+name = "atexit_cb_82C117B8"
+
+[entrypoint.functions.0x82C117D0]
+name = "atexit_cb_82C117D0"
+
+[entrypoint.functions.0x82C117E8]
+name = "atexit_cb_82C117E8"
+
+[entrypoint.functions.0x82C11800]
+name = "atexit_cb_82C11800"
+
+[entrypoint.functions.0x82C11818]
+name = "atexit_cb_82C11818"
+
+[entrypoint.functions.0x82C11820]
+name = "atexit_cb_82C11820"
+
+[entrypoint.functions.0x82C11838]
+name = "atexit_cb_82C11838"
+
+[entrypoint.functions.0x82C11850]
+name = "atexit_cb_82C11850"
+
+[entrypoint.functions.0x82C11858]
+name = "atexit_cb_82C11858"
+
+[entrypoint.functions.0x82C11860]
+name = "atexit_cb_82C11860"
+
+[entrypoint.functions.0x82C11868]
+name = "atexit_cb_82C11868"
+
+[entrypoint.functions.0x82C11870]
+name = "atexit_cb_82C11870"
+
+[entrypoint.functions.0x82C11878]
+name = "atexit_cb_82C11878"
+
+[entrypoint.functions.0x82C11880]
+name = "atexit_cb_82C11880"
+
+[entrypoint.functions.0x82C11888]
+name = "atexit_cb_82C11888"
+
+[entrypoint.functions.0x82C11890]
+name = "atexit_cb_82C11890"
+
+[entrypoint.functions.0x82C11898]
+name = "atexit_cb_82C11898"
+
+[entrypoint.functions.0x82C118A0]
+name = "atexit_cb_82C118A0"
+
+[entrypoint.functions.0x82C118A8]
+name = "atexit_cb_82C118A8"
+
+[entrypoint.functions.0x82C118B0]
+name = "atexit_cb_82C118B0"
+
+[entrypoint.functions.0x82C118C0]
+name = "atexit_cb_82C118C0"
+
+[entrypoint.functions.0x82C118C8]
+name = "atexit_cb_82C118C8"
+
+[entrypoint.functions.0x82C118D0]
+name = "atexit_cb_82C118D0"
+
+[entrypoint.functions.0x82C118D8]
+name = "atexit_cb_82C118D8"
+
+[entrypoint.functions.0x82C118E8]
+name = "atexit_cb_82C118E8"
+
+[entrypoint.functions.0x82C118F0]
+name = "atexit_cb_82C118F0"
+
+[entrypoint.functions.0x82C118F8]
+name = "atexit_cb_82C118F8"
+
+[entrypoint.functions.0x82C11928]
+name = "atexit_cb_82C11928"
+
+[entrypoint.functions.0x82C11948]
+name = "atexit_cb_82C11948"
+
+[entrypoint.functions.0x82C11950]
+name = "atexit_cb_82C11950"
+
+[entrypoint.functions.0x82C11958]
+name = "atexit_cb_82C11958"
+
+[entrypoint.functions.0x82C11960]
+name = "atexit_cb_82C11960"
+
+[entrypoint.functions.0x82C11968]
+name = "atexit_cb_82C11968"
+
+[entrypoint.functions.0x82C11970]
+name = "atexit_cb_82C11970"
+
+[entrypoint.functions.0x82C11978]
+name = "atexit_cb_82C11978"
+
+[entrypoint.functions.0x82C11988]
+name = "atexit_cb_82C11988"
+
+[entrypoint.functions.0x82C119C8]
+name = "atexit_cb_82C119C8"
+
+[entrypoint.functions.0x82C119E0]
+name = "atexit_cb_82C119E0"
+
+[entrypoint.functions.0x82C119F8]
+name = "atexit_cb_82C119F8"
+
+[entrypoint.functions.0x82C11A00]
+name = "atexit_cb_82C11A00"
+
+[entrypoint.functions.0x82C11A08]
+name = "atexit_cb_82C11A08"
+
+[entrypoint.functions.0x82C11A10]
+name = "atexit_cb_82C11A10"
+
+[entrypoint.functions.0x82C11A30]
+name = "atexit_cb_82C11A30"
+
+[entrypoint.functions.0x82C11A70]
+name = "atexit_cb_82C11A70"
+
+[entrypoint.functions.0x82C11A88]
+name = "atexit_cb_82C11A88"
+
+[entrypoint.functions.0x82C11AA0]
+name = "atexit_cb_82C11AA0"
+
+[entrypoint.functions.0x82C11AB8]
+name = "atexit_cb_82C11AB8"
+
+[entrypoint.functions.0x82C11AC0]
+name = "atexit_cb_82C11AC0"
+
+[entrypoint.functions.0x82C11AC8]
+name = "atexit_cb_82C11AC8"
+
+[entrypoint.functions.0x82C11AE0]
+name = "atexit_cb_82C11AE0"
+
+[entrypoint.functions.0x82C11AF8]
+name = "atexit_cb_82C11AF8"
+
+[entrypoint.functions.0x82C11B30]
+name = "atexit_cb_82C11B30"
+
+[entrypoint.functions.0x82C11B38]
+name = "atexit_cb_82C11B38"
+
+[entrypoint.functions.0x82C11B40]
+name = "atexit_cb_82C11B40"
+
+[entrypoint.functions.0x82C11B68]
+name = "atexit_cb_82C11B68"
+
+[entrypoint.functions.0x82C11CA0]
+name = "atexit_cb_82C11CA0"
+
+[entrypoint.functions.0x82C11CD0]
+name = "atexit_cb_82C11CD0"
+
+[entrypoint.functions.0x82C11D00]
+name = "atexit_cb_82C11D00"
+
+[entrypoint.functions.0x82C11D48]
+name = "atexit_cb_82C11D48"
+
+[entrypoint.functions.0x82C11DC0]
+name = "atexit_cb_82C11DC0"
+
+[entrypoint.functions.0x82C11E08]
+name = "atexit_cb_82C11E08"
+
+[entrypoint.functions.0x82C11E38]
+name = "atexit_cb_82C11E38"
+
+[entrypoint.functions.0x82C11E50]
+name = "atexit_cb_82C11E50"
+
+[entrypoint.functions.0x82C11E68]
+name = "atexit_cb_82C11E68"
+
+[entrypoint.functions.0x82C11E80]
+name = "atexit_cb_82C11E80"
+
+[entrypoint.functions.0x82C11E98]
+name = "atexit_cb_82C11E98"
+
+[entrypoint.functions.0x82C11EC8]
+name = "atexit_cb_82C11EC8"
+
+[entrypoint.functions.0x82C11EE0]
+name = "atexit_cb_82C11EE0"
+
+[entrypoint.functions.0x82C11F10]
+name = "atexit_cb_82C11F10"
+
+[entrypoint.functions.0x82C11F80]
+name = "atexit_cb_82C11F80"
+
+[entrypoint.functions.0x82C11F98]
+name = "atexit_cb_82C11F98"
+
+[entrypoint.functions.0x82C11FE8]
+name = "atexit_cb_82C11FE8"
+
+[entrypoint.functions.0x82C12000]
+name = "atexit_cb_82C12000"
+
+[entrypoint.functions.0x82C12018]
+name = "atexit_cb_82C12018"
+
+[entrypoint.functions.0x82C12020]
+name = "atexit_cb_82C12020"
+
+[entrypoint.functions.0x82C12028]
+name = "atexit_cb_82C12028"
+
+[entrypoint.functions.0x82C12030]
+name = "atexit_cb_82C12030"
+
+[entrypoint.functions.0x82C12038]
+name = "atexit_cb_82C12038"
+
+[entrypoint.functions.0x82C12040]
+name = "atexit_cb_82C12040"
+
+[entrypoint.functions.0x82C12048]
+name = "atexit_cb_82C12048"
+
+[entrypoint.functions.0x82C12050]
+name = "atexit_cb_82C12050"
+
+[entrypoint.functions.0x82C12058]
+name = "atexit_cb_82C12058"
+
+[entrypoint.functions.0x82C120A8]
+name = "atexit_cb_82C120A8"
+
+[entrypoint.functions.0x82C120B0]
+name = "atexit_cb_82C120B0"
+
+[entrypoint.functions.0x82C120B8]
+name = "atexit_cb_82C120B8"
+
+[entrypoint.functions.0x82C120F8]
+name = "atexit_cb_82C120F8"
+
+[entrypoint.functions.0x82C12168]
+name = "atexit_cb_82C12168"
+
+[entrypoint.functions.0x82C12178]
+name = "atexit_cb_82C12178"
+
+[entrypoint.functions.0x82C121E0]
+name = "atexit_cb_82C121E0"
+
+[entrypoint.functions.0x82C12228]
+name = "atexit_cb_82C12228"
+
+[entrypoint.functions.0x82C12238]
+name = "atexit_cb_82C12238"
+
+[entrypoint.functions.0x82C12250]
+name = "atexit_cb_82C12250"
+
+[entrypoint.functions.0x82C12268]
+name = "atexit_cb_82C12268"
+
+[entrypoint.functions.0x82C12280]
+name = "atexit_cb_82C12280"
+
+[entrypoint.functions.0x82C122C0]
+name = "atexit_cb_82C122C0"
+
+[entrypoint.functions.0x82C122D0]
+name = "atexit_cb_82C122D0"
+
+[entrypoint.functions.0x82C122E0]
+name = "atexit_cb_82C122E0"
+
+[entrypoint.functions.0x82C122F0]
+name = "atexit_cb_82C122F0"
+
+[entrypoint.functions.0x82C12308]
+name = "atexit_cb_82C12308"
+
+[entrypoint.functions.0x82C12310]
+name = "atexit_cb_82C12310"
+
+[entrypoint.functions.0x82C12368]
+name = "atexit_cb_82C12368"
+
+[entrypoint.functions.0x82C123C0]
+name = "atexit_cb_82C123C0"
+
+[entrypoint.functions.0x82C12430]
+name = "atexit_cb_82C12430"
+
+[entrypoint.functions.0x82C12448]
+name = "atexit_cb_82C12448"
+
+[entrypoint.functions.0x82C12460]
+name = "atexit_cb_82C12460"
+
+[entrypoint.functions.0x82C12478]
+name = "atexit_cb_82C12478"
+
+[entrypoint.functions.0x82C12490]
+name = "atexit_cb_82C12490"
+
+[entrypoint.functions.0x82C124B8]
+name = "atexit_cb_82C124B8"
+
+[entrypoint.functions.0x82C124D0]
+name = "atexit_cb_82C124D0"
+
+[entrypoint.functions.0x82C124E8]
+name = "atexit_cb_82C124E8"
+
+[entrypoint.functions.0x82C12500]
+name = "atexit_cb_82C12500"
+
+[entrypoint.functions.0x82C12518]
+name = "atexit_cb_82C12518"
+
+[entrypoint.functions.0x82C12530]
+name = "atexit_cb_82C12530"
+
+# The CRT exit wrapper the eight Lua panic paths call (0x825ED7C0..0x825FDB60 -> li r3,1; b <exit>):
+# ds1_exit_diagnostico.cpp hooks it to dump the Lua error the retail build swallows.
+
+[entrypoint.functions.0x828A09F8]
+name = "ds1_exit_wrapper"
+
+# The Lua string interner (luaS_newlstr, (L, str, len)): every script constant passes through here after
+# the game has decompressed its bundle, so it is the one place a bad binding name can be fixed whatever
+# copy or compression it traveled in. ds1_exit_diagnostico.cpp rewrites the tuner-only watch API names
+# (never registered by this build) to GetSwarmCount.
+[entrypoint.functions.0x825FBC38]
+name = "ds1_lua_intern"

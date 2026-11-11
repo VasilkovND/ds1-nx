@@ -69,6 +69,7 @@ not known until the first run.
 | 11 | Without telemetry, 540p stock: 21-29 fps, GPU 32-45 ms at 1,500-2,900 draws (GPU-bound). Geometry store full (1,722 evictions / 10 s); stable ranges checked every 2nd frame made the opening doors jump back | store 128 MB; ranges checked every frame again |
 | 12 | Profiled (telemetry): 80 passes for 4,010 draws, scene passes 30 ms of which draws 16 ms; passes cut every 256 draws by the partial submits | partial submits every 1,024 draws |
 | 13 | Same scenes, intervals over 1,500 draws: GPU 36.8 ms a frame (run 11: 42.3), fps 24.8 (24.5); light scenes 29-30 fps | open: still GPU-bound in heavy rooms |
+| 15-20 | At the chapter 3 load the exit-time callback walker (0x828A0900, over the CRT table at 0x82DE9F30/34) calls three functions the analysis missed (0x82C11928, 0x82C10F58, 0x82C10510): `unregistered function` three times, then a read of guest 0x6 | the table is filled at run time by registration thunks (`lis r11, 0x82C10000; addi r3, r11, imm; b 0x8289B460`); all 347 destructors they name (0x82C10330-0x82C12530) added to `codegen/names.toml` as `atexit_cb_*` |
 | 14 | 720p, CPU 1785 MHz (overclocked; the choice saved from the menu): a short session at 29.7-30 fps, GPU 8-32 ms at up to 1,400 draws, no errors | - |
 | 10 | Picture right; 17-29 fps at 540p stock, GPU 30-57 ms per frame at 1,500-4,600 draws; RWAudioCore mixer 66 % of a core (a per-sample IIR filter, 0x82644C38), XMA decoder 31 % | measured with telemetry on (1 ms stack sampling): to measure again without it |
 

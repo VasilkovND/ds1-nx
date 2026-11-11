@@ -77,6 +77,7 @@ ds1_add_hook(src/ds1_audio.cpp rw__audio__core__MixWithGain rw__audio__core__Cop
              ds1_rw_audio_Compressor1_Process ds1_rw_audio_MixerThreadLoop ds1_xaudio_ThreadA ds1_xaudio_ThreadB
              rw__audio__core__StreamPool__AcquireStream)
 ds1_add_hook(src/ds1_game_cpu.cpp ds1_SetThreadPriority ds1_D3D_GpuWaitStep ds1_D3DDevice_SetGammaRamp)
+ds1_add_hook(src/ds1_exit_diagnostico.cpp ds1_exit_wrapper ds1_lua_intern)
 ds1_add_hook(src/ds1_resolution.cpp ds1_ConfigureDisplay)
 target_sources(ds1 PRIVATE ${DS1_GAME_HOOKS})
 

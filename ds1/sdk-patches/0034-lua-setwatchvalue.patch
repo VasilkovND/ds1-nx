@@ -1,0 +1,80 @@
+--- a/include/rex/filesystem/devices/host_path_file.h
++++ b/include/rex/filesystem/devices/host_path_file.h
+@@ -85,6 +85,11 @@
+   X_STATUS ReadSync(std::span<uint8_t> buffer, size_t byte_offset, size_t* out_bytes_read) override;
+   X_STATUS WriteSync(std::span<const uint8_t> buffer, size_t byte_offset,
+                      size_t* out_bytes_written) override;
++  /*
++   * ds1-nx 0034: the same bytes the game asks for, with the byte patches of 0034 applied. The window
++   * and the caches keep the file's real bytes; only what leaves towards the game is patched.
++   */
++  X_STATUS ReadSyncSinParches(std::span<uint8_t> buffer, size_t byte_offset, size_t* out_bytes_read);
+   X_STATUS SetLength(size_t length) override;
+   X_STATUS Flush() override;
+ 
+--- a/src/filesystem/devices/host_path_file.cpp
++++ b/src/filesystem/devices/host_path_file.cpp
+@@ -10,6 +10,28 @@
+  */
+ 
+ #include <rex/filesystem/devices/host_path_entry.h>
++
++/*
++ * ds1-nx 0034: the chapter 3 crash. 90 seconds into chapter 3 the flicker light effect runs the shared
++ * audio script assets\shared\audio\luascripts\_common, whose compiled Lua calls the global
++ * SetWatchValue - a tuner-only binding this build of the game never registers - so the call is nil,
++ * Lua panics (no protected frame), the game calls exit(1) and the teardown crashes ("read of guest
++ * 0x6"). Every "SetWatchValue" that leaves towards the game in a bigfile read is turned into
++ * "GetSwarmCount", a registered query of the same 13 bytes that ignores its arguments. The search runs
++ * on the outgoing buffer (after the window and the caches, which keep the file's real bytes), so it
++ * covers every copy of the script, whatever bundle it travels in: whatever the game reads, it reads it
++ * decompressed. The game data itself is not touched.
++ */
++namespace {
++constexpr char kParcheOriginal[] = "SetWatchValue";
++constexpr char kParcheReemplazo[] = "GetSwarmCount";
++constexpr size_t kParcheLargo = sizeof(kParcheOriginal) - 1;
++std::atomic<uint32_t> g_parches_aplicados{0};
++bool TerminaEn(const std::string& ruta, const char* cola) {
++  const size_t n = std::strlen(cola);
++  return ruta.size() >= n && ruta.compare(ruta.size() - n, n, cola) == 0;
++}
++}  // namespace
+ #include <rex/filesystem/devices/host_path_file.h>
+ 
+ #include <algorithm>
+@@ -745,6 +767,34 @@
+ 
+ X_STATUS HostPathFile::ReadSync(std::span<uint8_t> buffer, size_t byte_offset,
+                                 size_t* out_bytes_read) {
++  const X_STATUS estado = ReadSyncSinParches(buffer, byte_offset, out_bytes_read);
++  if (estado == X_STATUS_SUCCESS && out_bytes_read && !buffer.empty() && entry() &&
++      *out_bytes_read >= kParcheLargo) {
++    const std::string& ruta = entry()->path();
++    if (TerminaEn(ruta, "bigfile0.viv") || TerminaEn(ruta, "bigfile1.viv") ||
++        TerminaEn(ruta, "BIGFILE0.VIV") || TerminaEn(ruta, "BIGFILE1.VIV")) {
++      const size_t leidos = *out_bytes_read;
++      size_t i = 0;
++      while (i + kParcheLargo <= leidos) {
++        if (std::memcmp(buffer.data() + i, kParcheOriginal, kParcheLargo) == 0) {
++          std::memcpy(buffer.data() + i, kParcheReemplazo, kParcheLargo);
++          const uint32_t n = g_parches_aplicados.fetch_add(1) + 1;
++          if (n <= 10 || (n & (n - 1)) == 0) {
++            REXLOG_WARN("[parche] SetWatchValue -> GetSwarmCount en {} +{} (vez {})", ruta,
++                        byte_offset + i, n);
++          }
++          i += kParcheLargo;
++        } else {
++          ++i;
++        }
++      }
++    }
++  }
++  return estado;
++}
++
++X_STATUS HostPathFile::ReadSyncSinParches(std::span<uint8_t> buffer, size_t byte_offset,
++                                         size_t* out_bytes_read) {
+   // No handle means a directory (see HostPathEntry::Open). A directory is enumerated, not read.
+   if (!file_handle_) {
+     return X_STATUS_FILE_IS_A_DIRECTORY;
